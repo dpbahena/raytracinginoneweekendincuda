@@ -145,10 +145,15 @@ __global__ void free_world(hitable **d_list, hitable **d_world, camera **d_camer
     delete *d_camera;
 }
 
+__global__ void init_random(unsigned int seed, curandState_t* states){
+        int idx = blockIdx.x * blockDim.x + threadIdx.x;
+        curand_init(seed, idx, 0, &states[idx]);
+}
+
 int main() {
     int nx = 1200;
     int ny = 800;
-    int ns = 10;
+    int ns = 500;
     int tx = 8;
     int ty = 8;
 
